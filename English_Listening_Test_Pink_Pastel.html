@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade 11 English Listening Test</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #182235;
+      --muted: #68758a;
+      --primary: #3858d6;
+      --primary-dark: #2844b5;
+      --line: #e1e7f0;
+      --good: #137547;
+      --good-bg: #eaf8f0;
+      --bad: #b42318;
+      --bad-bg: #fff0ef;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top left, #e8edff 0, transparent 38%), var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+    .page { width: min(920px, calc(100% - 28px)); margin: 32px auto 56px; }
+    .hero {
+      padding: 30px;
+      border-radius: 22px;
+      color: white;
+      background: linear-gradient(135deg, #263fae, #6478ee);
+      box-shadow: 0 14px 35px rgba(48, 68, 170, .18);
+    }
+    .eyebrow { font-size: .78rem; letter-spacing: .13em; text-transform: uppercase; opacity: .85; font-weight: 700; }
+    h1 { margin: 8px 0; font-size: clamp(1.65rem, 4vw, 2.45rem); line-height: 1.15; }
+    .hero p { margin: 8px 0 0; opacity: .92; }
+    .hero .group-credit {
+      margin-top: 16px; padding: 11px 14px; border-radius: 10px;
+      background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .24);
+      font-size: .94rem;
+    }
+    .panel {
+      background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+      padding: 22px; margin-top: 18px; box-shadow: 0 7px 22px rgba(25, 43, 80, .045);
+    }
+    h2 { margin: 0 0 12px; font-size: 1.2rem; }
+    .hint { color: var(--muted); font-size: .94rem; margin-top: 0; }
+    .audio-box { border: 1.5px dashed #b8c4e8; background: #f8f9ff; padding: 16px; border-radius: 14px; }
+    input[type="file"] { display: block; width: 100%; margin: 8px 0 12px; }
+    audio { display: block; width: 100%; margin-top: 12px; }
+    .status { color: var(--muted); font-size: .9rem; }
+    .audio-apology{margin:12px 0 0;text-align:center;font-size:.82rem;letter-spacing:.025em;color:#4f9ab4;font-style:italic;animation:sparkle 2.2s ease-in-out infinite}
+    @keyframes sparkle{0%,100%{opacity:.72;text-shadow:0 0 2px #b9eaf7}50%{opacity:1;text-shadow:0 0 8px #8bd8ef,0 0 13px #c5f4e5}}
+    body.dark .audio-apology{color:#a9e7f6}
+    .question { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .question:last-child { border-bottom: 0; padding-bottom: 0; }
+    .q-title { font-weight: 700; margin: 0 0 11px; }
+    .option {
+      display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; margin: 7px 0;
+      border: 1px solid var(--line); border-radius: 11px; cursor: pointer; transition: .15s ease;
+    }
+    .option:hover { border-color: #a9b7ef; background: #fafbff; }
+    .option input { margin-top: 5px; accent-color: var(--primary); }
+    .option.correct { border-color: #8dd4ac; background: var(--good-bg); }
+    .option.incorrect { border-color: #f0aaa5; background: var(--bad-bg); }
+    .feedback { font-size: .92rem; margin-top: 10px; padding: 10px 12px; border-radius: 10px; color: var(--ink); background: #f5f7fc; }
+    .transcript { line-height: 1.9; }
+    .transcript p { margin: 10px 0; }
+    .transcript mark { background: #ffeb70; color: #252525; padding: 2px 4px; border-radius: 4px; }
+    .transcript .speaker { font-weight: 700; color: var(--primary); }
+    .transcript-note { background: #fff9db; border: 1px solid #f0df8a; padding: 12px; border-radius: 10px; font-size: .9rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    button {
+      border: 0; border-radius: 11px; padding: 12px 18px; font-size: .98rem; font-weight: 700;
+      cursor: pointer;
+    }
+    .primary { background: var(--primary); color: white; }
+    .primary:hover { background: var(--primary-dark); }
+    .secondary { background: #edf0f7; color: var(--ink); }
+    button:focus-visible, input:focus-visible { outline: 3px solid #aab8ff; outline-offset: 2px; }
+    #result { display: none; }
+    .vocab-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .vocab-item { border: 1px solid var(--line); border-radius: 12px; padding: 13px; background: #fbfcff; }
+    .vocab-item strong { color: var(--primary); }
+    .vocab-item p { margin: 5px 0 0; }
+    .score { font-size: 2rem; font-weight: 800; color: var(--primary); margin: 2px 0; }
+    .result-note { color: var(--muted); margin: 0; }
+    .footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 24px 8px 0; }
+    @media (max-width: 600px) {
+      .page { width: min(100% - 18px, 920px); margin-top: 12px; }
+      .hero, .panel { padding: 18px; border-radius: 15px; }
+    }
+
+    /* Clear sky-blue + mint theme for stronger contrast */
+    :root{--bg:#f1f8fc;--card:#ffffff;--ink:#203746;--muted:#526b7a;--primary:#287da5;--primary-dark:#1e6385;--line:#d5e6ee;--good:#17643c;--good-bg:#e5f7ec;--bad:#a32335;--bad-bg:#fff0f1;--shadow:0 10px 28px rgba(37,91,117,.09)}
+    body{background:radial-gradient(circle at 8% 4%,#d8effa 0,transparent 29%),radial-gradient(circle at 95% 18%,#dcf6ed 0,transparent 25%),var(--bg);font-family:'Trebuchet MS',Arial,sans-serif;transition:background .25s,color .25s;color:var(--ink)}
+    .page{max-width:960px;margin:24px auto 40px}
+    .hero{position:relative;overflow:hidden;padding:34px;border-radius:24px;color:#173e52;background:linear-gradient(135deg,#d5f0fb,#eaf8fc 55%,#d9f5e9);border:1px solid #c5e5f0;box-shadow:0 14px 34px rgba(37,111,143,.13)}
+    .hero:after{content:'🐰 ✦ ♡';position:absolute;right:24px;top:18px;font-size:clamp(1.8rem,5vw,3.4rem);opacity:.9;transform:rotate(7deg);pointer-events:none}
+    .eyebrow{color:#246d91;opacity:1;letter-spacing:.12em}.hero h1{color:#174e6a}.hero p{color:#294f61}.hero .group-credit{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);border-radius:14px;color:#294f61}
+    .panel{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:20px;padding:24px;margin-top:18px;box-shadow:var(--shadow);animation:floatIn .4s ease both}
+    h2{color:#216d91}.hint{color:var(--muted)}.audio-box{border:1.5px dashed #8ec9df;background:#f2fbff;border-radius:16px}.status{color:#456b7b}
+    .option{background:#fff;border-color:#d5e6ee;border-radius:13px;padding:12px 14px;transition:transform .18s,border-color .18s,background .18s}.option:hover{border-color:#69b5d1;background:#eff9fd;transform:translateY(-1px)}.option.correct{background:var(--good-bg);border-color:#8dd4ac}.option.incorrect{background:var(--bad-bg);border-color:#e7a1aa}
+    button{border-radius:999px;transition:transform .18s,box-shadow .18s}button:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(37,111,143,.14)}.primary{background:linear-gradient(135deg,#328eb5,#26779e);color:white}.primary:hover{background:linear-gradient(135deg,#26779e,#1d6488)}.secondary{background:#eaf6fb;color:#215e7a;border:1px solid #c6e4ef}
+    .transcript-note{background:#fff8d9;border-color:#eadb8d;border-radius:13px}.transcript mark{background:#ffe78a;color:#252525}.transcript .speaker{color:#216d91}.vocab-item{border-color:#d5e8ef;background:linear-gradient(145deg,#fff,#f3fbfd);border-radius:15px;position:relative}.vocab-item strong{color:#216d91}.score{color:#267da5}.feedback{border-radius:13px;background:#f1f9fc;border:1px solid #d4e8f0}
+    .top-tools{display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px}.tool-btn{background:#fff;border:1px solid #cfe4ec;color:#245e78;padding:9px 13px;font-size:.9rem}
+    .progress-wrap{margin:8px 0 20px;padding:13px 15px;background:#f1f9fc;border:1px solid #d1e7ef;border-radius:15px}.progress-meta{display:flex;justify-content:space-between;gap:10px;font-size:.9rem;color:#315f73;margin-bottom:8px;font-weight:700}.progress-track{height:9px;border-radius:99px;background:#dceef4;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#74c9dc,#4eb99e);border-radius:99px;transition:width .3s ease}
+    .badge-result{display:inline-flex;align-items:center;gap:8px;margin:10px 0;padding:9px 14px;border-radius:999px;background:#fff1c9;color:#785410;font-weight:800;border:1px solid #e9d38b}
+    .save-word{float:right;padding:5px 9px;font-size:.8rem;background:#fff;color:#245f7a;border:1px solid #cfe4ec}.vocab-item.saved{border-color:#66b8d1;box-shadow:0 0 0 2px #dff4fb inset}.saved-label{display:none;color:#176e91;font-size:.8rem;font-weight:700}.vocab-item.saved .saved-label{display:inline-block}
+    body.dark{--bg:#17252e;--card:#233640;--ink:#eef7fb;--muted:#bdd0d9;--line:#3e5965;--primary:#77c8e4;--primary-dark:#55afd0;--good-bg:#1e3b2d;--bad-bg:#482b32;background:radial-gradient(circle at 8% 4%,#254654 0,transparent 30%),#17252e;color:var(--ink)}body.dark .panel{background:rgba(35,54,64,.97);border-color:#3e5965}body.dark .hero{background:linear-gradient(135deg,#244d60,#29434b);border-color:#426b78;color:#eefaff}body.dark .hero h1,body.dark .hero p,body.dark .hero .group-credit{color:#eefaff}body.dark .hero .group-credit{background:#315462;border-color:#527786}body.dark h2{color:#9ddcf0}body.dark .audio-box,body.dark .progress-wrap,body.dark .feedback{background:#293f49;border-color:#46636f}body.dark .option,body.dark .vocab-item{background:#2a404a;border-color:#46616d;color:#eef7fb}body.dark .option:hover{background:#34525f}body.dark .secondary,body.dark .tool-btn{background:#304b57;color:#e3f7ff;border-color:#527381}body.dark .progress-track{background:#405b66}body.dark .transcript-note{background:#4b4329;border-color:#76683b;color:#fff1c7}body.dark .transcript mark{color:#352817}body.dark .save-word{background:#304b57;color:#e3f7ff;border-color:#527381}
+    .footer{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--muted);font-size:.9rem;padding:26px 8px 8px}.back-top{font-weight:700;padding:11px 20px;box-shadow:0 5px 14px rgba(37,111,143,.12)}
+    @keyframes floatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+    @media(max-width:600px){.page{width:calc(100% - 18px);margin-top:12px}.hero,.panel{padding:18px;border-radius:17px}.hero:after{right:12px;top:12px;font-size:1.8rem}.top-tools{justify-content:stretch}.tool-btn{flex:1}.progress-meta{font-size:.82rem}}
+
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="top-tools"><button type="button" class="tool-btn" id="themeToggle" aria-pressed="false">🌙 Dark mode</button></div>
+    <header class="hero">
+      <div class="eyebrow">English Listening • Grade 11</div>
+      <h1>English Listening Test</h1>
+      <p class="group-credit"><strong>Prepared by:</strong> Bảo Trâm cute, Thanh Huyên, Nhật Huy &amp; Anh Đức</p>
+      <p>Listen to the conversation and choose the best answer for each question.</p>
+      <p><strong>Time:</strong> 15 minutes &nbsp;•&nbsp; <strong>Total:</strong> 6 questions</p>
+    </header>
+
+    <section class="panel">
+      <h2>Part I — Listening audio</h2>
+      <p class="hint">The test loads the audio file <strong>listening.mp3</strong> from this GitHub repository. Put the recording beside <strong>index.html</strong>. You can also select another audio file below for local testing.</p>
+      <div class="audio-box">
+        <label for="audioFile"><strong>Select the listening file (.mp3, .wav, .m4a, etc.)</strong></label>
+        <input id="audioFile" type="file" accept="audio/*" />
+        <div id="audioStatus" class="status">Default audio: listening.mp3</div>
+        <audio id="audioPlayer" controls preload="metadata" src="listening.mp3"></audio>
+        <p class="audio-apology">✧･ﾟ: *✧･ﾟ:*　giọng đọc hơi khó nghe, các bạn thông cảm &lt;3　*:･ﾟ✧*:･ﾟ✧</p>
+      </div>
+    </section>
+
+    <section class="panel" id="transcriptPanel" hidden>
+      <h2>Part II — Listening transcript</h2>
+      <p class="hint">The yellow highlights show the key evidence for the correct answers. Read them after listening to check your understanding.</p>
+      <div class="transcript-note"><strong>Study tip:</strong> The yellow highlights mark the evidence that supports the answers. This transcript appears only after you submit the quiz.</div>
+      <div class="transcript" id="transcriptText">
+        <p><span class="speaker">c:</span> Hello everyone. Today, our group will present a family conflict about curfews and lifestyle choices. Let’s start at school with Trâm and her best friend, b.</p>
+        <p><span class="speaker">b:</span> Hey Trâm! Are you ready for the biggest event of the semester? Maya’s sixteenth birthday party is this Saturday night! There will be a DJ, music, and lots of food.</p>
+        <p><span class="speaker">Trâm:</span> I know. Everyone is talking about it. I really want to go, b. But you know my parents. They are very strict.</p>
+        <p><span class="speaker">b:</span> Wait, don’t tell me you have to leave early again. The party does not even start until 10:00 PM! Everyone plans to stay until midnight or later.</p>
+        <p><span class="speaker">Trâm:</span> Exactly! My normal curfew is <mark data-evidence="0">9:00 PM</mark>. If I leave at 9:00, the party has not even begun. Last time, I left early and missed all the fun. On Monday, I did not understand my friends’ jokes. I felt <mark data-evidence="2">left out</mark>.</p>
+        <p><span class="speaker">b:</span> That’s not fair! You are sixteen now, not a baby. Going out at weekends helps us relax after a stressful week of studying. You should talk to your parents and ask to stay until midnight.</p>
+        <p><span class="speaker">Trâm:</span> You’re right. I will talk to them tonight!</p>
+        <p><span class="speaker">c:</span> Later that evening, Trâm talks to her parents, Huyền and a, in the living room.</p>
+        <p><span class="speaker">Trâm:</span> Mom, Dad, do you have a minute? I need to ask you something about this Saturday.</p>
+        <p><span class="speaker">Huyền:</span> Sure, sweetie. What is it? Is it about your English project?</p>
+        <p><span class="speaker">Trâm:</span> Not exactly. It is Maya’s birthday party this Saturday night. Everyone in my class is invited. Can I stay there until midnight, please?</p>
+        <p><span class="speaker">Huyền:</span> Midnight? Absolutely not! Trâm, we have talked about this many times. Your weekend curfew is 9:00 PM, and that is already generous.</p>
+        <p><span class="speaker">Trâm:</span> But Mom! Why does it always have to be 9:00 PM? Midnight is normal nowadays. Times have changed! If I leave early, my friends may stop inviting me. My social life will be ruined!</p>
+        <p><span class="speaker">a:</span> Trâm, keep your voice down. Do not yell at your mother. Your mother is right. Midnight is not possible. You are only sixteen. <mark data-evidence="1">The streets are not safe late at night</mark>, and we cannot protect you when we are asleep at home.</p>
+        <p><span class="speaker">Trâm:</span> You do not understand teenagers today! You do not trust me! You just want to control my life!</p>
+        <p><span class="speaker">Huyền:</span> It is not about control, Trâm. It is about your lifestyle recently. You have been out with your friends four times this week. You come home, go to your room, and go to sleep.</p>
+        <p><span class="speaker">a:</span> Your mother is right. Yesterday, your teacher called me. She said <mark data-evidence="3">your grades are going down, and you always look tired in the morning. You missed two homework assignments this week</mark>. You need to balance your social life and your schoolwork.</p>
+        <p><span class="speaker">Trâm:</span> My grades are still fine! I only missed two small assignments because I was tired. Why can’t I have some fun? Studying is stressful, and spending time with my friends helps me relax.</p>
+        <p><span class="speaker">Huyền:</span> We are glad you have good friends, Trâm. We do not hate your friends, and we do not want to stop your fun. But staying out until midnight is not safe.</p>
+        <p><span class="speaker">a:</span> Okay, look. We love you, and we know this party is important to you. Arguing will not solve anything. How about a <mark data-evidence="4">compromise</mark>?</p>
+        <p><span class="speaker">Trâm:</span> What kind of compromise?</p>
+        <p><span class="speaker">a:</span> This Saturday, you can stay at Maya’s house until <mark data-evidence="4">10:30 PM</mark>. That gives you an extra hour and a half.</p>
+        <p><span class="speaker">Huyền:</span> But there are two conditions. First, you must <mark data-evidence="4">text me every hour</mark> to tell me you are safe. Second, you cannot take a motorbike or taxi late at night. Your dad will drive to Maya’s house and <mark data-evidence="4">pick you up at exactly 10:30</mark>. Deal?</p>
+        <p><span class="speaker">Trâm:</span> 10:30 PM… It is not midnight, but <mark data-evidence="5">it is better than 9:00 PM</mark>. At least I can see the cake cutting. Okay, deal. Thanks, Mom. Thanks, Dad.</p>
+        <p><span class="speaker">c:</span> As you can see from our performance, family conflicts are a natural part of growing up. Teenagers want more independence, while parents want to protect them. The best way to solve problems is to talk, listen, and find a solution together. Thank you for listening to our presentation!</p>
+      </div>
+    </section>
+
+    <form id="quizForm" class="panel">
+      <h2>Part III — Questions</h2>
+      <p class="hint">Choose A, B, C, or D for every question, then select “Submit answers”.</p>
+      <div class="progress-wrap" aria-label="Quiz progress"><div class="progress-meta"><span id="progressLabel">🌷 Progress: 0 of 6 answered</span><span id="progressPercent">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+      <div id="questions"></div>
+      <div class="actions">
+        <button class="primary" type="submit">Submit answers</button>
+        <button class="secondary" type="button" id="resetBtn">Reset test</button>
+      </div>
+    </form>
+
+    <section id="result" class="panel" aria-live="polite">
+      <h2>Your result</h2>
+      <div id="score" class="score">0 / 6</div>
+      <div id="badgeResult" class="badge-result" hidden>🌟 Listening Star</div>
+      <p id="resultNote" class="result-note"></p>
+      <p class="hint">Correct answers and explanations are shown below each question.</p>
+    </section>
+
+    <section class="panel" id="vocabularyPanel" hidden>
+      <h2>Part IV — Useful &amp; challenging vocabulary</h2>
+      <p class="hint">New vocabulary from the listening transcript. This section appears only after you submit your answers.</p>
+      <div class="vocab-list">
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>curfew</strong> <span> /ˈkɜː.fjuː/ (n.)</span><p><b>Nghĩa:</b> giờ giới nghiêm; thời gian phải về nhà.</p><p><b>Example:</b> My normal curfew is 9:00 PM.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>stay out late</strong> <span>(phrase)</span><p><b>Nghĩa:</b> ở ngoài đến khuya.</p><p><b>Example:</b> Could I stay out a little later?</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>completely left out</strong> <span>(phrase)</span><p><b>Nghĩa:</b> cảm thấy hoàn toàn bị gạt ra ngoài, không được tham gia cùng mọi người.</p><p><b>Example:</b> I felt completely left out.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>be concerned about</strong> <span>(phrase)</span><p><b>Nghĩa:</b> lo lắng, quan ngại về điều gì.</p><p><b>Example:</b> We're concerned about your grades.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>exhausted</strong> <span>/ɪɡˈzɔː.stɪd/ (adj.)</span><p><b>Nghĩa:</b> kiệt sức, vô cùng mệt mỏi.</p><p><b>Synonym:</b> extremely tired.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>assignment</strong> <span>/əˈsaɪn.mənt/ (n.)</span><p><b>Nghĩa:</b> bài tập hoặc nhiệm vụ được giao.</p><p><b>Collocation:</b> miss / submit / complete an assignment.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>compromise</strong> <span>/ˈkɒm.prə.maɪz/ (n./v.)</span><p><b>Nghĩa:</b> sự thỏa hiệp; đạt thỏa thuận mà mỗi bên nhượng bộ một phần.</p><p><b>Example:</b> How about a compromise?</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>pick someone up</strong> <span>(phrasal verb)</span><p><b>Nghĩa:</b> đón ai bằng xe hoặc đến đón ai.</p><p><b>Example:</b> Your dad will pick you up.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>keep someone updated</strong> <span>(phrase)</span><p><b>Nghĩa:</b> thường xuyên cập nhật thông tin cho ai.</p><p><b>Example:</b> I'll keep you updated.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>strict</strong> <span>/strɪkt/ (adj.)</span><p><b>Nghĩa:</b> nghiêm khắc.</p><p><b>Collocation:</b> strict parents / strict rules.</p><p><b>Example:</b> Her parents are very strict.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>be invited to</strong> <span>(phrase)</span><p><b>Nghĩa:</b> được mời đến tham dự.</p><p><b>Example:</b> Everyone in my class is invited to the party.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>miss out on</strong> <span>(phrasal verb)</span><p><b>Nghĩa:</b> bỏ lỡ cơ hội hoặc trải nghiệm thú vị.</p><p><b>Example:</b> I don't want to miss out on the fun.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>argue with someone</strong> <span>(phrase)</span><p><b>Nghĩa:</b> tranh cãi với ai.</p><p><b>Example:</b> Arguing with your parents will not solve anything.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>independence</strong> <span>/ˌɪn.dɪˈpen.dəns/ (n.)</span><p><b>Nghĩa:</b> sự độc lập, tự chủ.</p><p><b>Word family:</b> independent (adj.), independently (adv.).</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>protect</strong> <span>/prəˈtekt/ (v.)</span><p><b>Nghĩa:</b> bảo vệ.</p><p><b>Collocation:</b> protect someone from danger.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>condition</strong> <span>/kənˈdɪʃ.ən/ (n.)</span><p><b>Nghĩa:</b> điều kiện.</p><p><b>Collocation:</b> meet / set / agree to a condition.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>balance A and B</strong> <span>(phrase)</span><p><b>Nghĩa:</b> cân bằng A và B.</p><p><b>Example:</b> You need to balance your social life and schoolwork.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>lifestyle</strong> <span>/ˈlaɪf.staɪl/ (n.)</span><p><b>Nghĩa:</b> lối sống.</p><p><b>Collocation:</b> a healthy / busy lifestyle.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>come to an agreement</strong> <span>(phrase)</span><p><b>Nghĩa:</b> đi đến thống nhất/thỏa thuận.</p><p><b>Example:</b> They talked calmly and came to an agreement.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>nowadays</strong> <span>/ˈnaʊ.ə.deɪz/ (adv.)</span><p><b>Nghĩa:</b> ngày nay, hiện nay.</p><p><b>Example:</b> Teenagers use technology a lot nowadays.</p></article>
+        <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>stressful</strong> <span>/ˈstres.fəl/ (adj.)</span><p><b>Nghĩa:</b> gây căng thẳng.</p><p><b>Word family:</b> stress (n./v.), stressed (adj.).</p></article>
+      </div>
+    </section>
+
+    <div class="footer"><span>Practice with care: listen to the audio before choosing your answers. 🐰</span><button type="button" class="primary back-top" id="topBtn">↑ Back to top</button></div>
+  </main>
+
+  <script>
+    const quizData = [
+      {
+        question: "What time does Trâm normally have to return home on weekends?",
+        options: ["9:00 PM", "10:00 PM", "10:30 PM", "Midnight"],
+        answer: 0,
+        explanation: 'Trâm says, “My normal curfew is 9:00 PM.”', explanationVi: 'Trong transcript, mẹ nhắc rõ giờ giới nghiêm thông thường của Trâm là 9 giờ tối. Cụm “normal curfew is 9:00 PM” là bằng chứng trực tiếp.'
+      },
+      {
+        question: "Why are Trâm’s parents strictly against her proposal to stay out late?",
+        options: [
+          "They believe that party tickets are far too expensive.",
+          "They want her to focus entirely on household chores.",
+          "They are deeply concerned about her safety in the streets at night.",
+          "They have already planned a family trip that evening."
+        ],
+        answer: 2,
+        explanation: 'Her father says the streets are not safe late at night.', explanationVi: 'Bố nói đường phố không an toàn vào đêm muộn. Vì vậy, lý do chính là bố mẹ lo cho sự an toàn của Trâm, không phải tiền vé hay việc nhà.'
+      },
+      {
+        question: "What is Trâm’s primary concern if she leaves the birthday celebration early?",
+        options: [
+          "She will fail her upcoming chemistry and mathematics exams.",
+          "She will miss the chance to try the birthday cake.",
+          "She will have to help organise the party.",
+          "She will feel isolated and excluded from her friend group at school."
+        ],
+        answer: 3,
+        explanation: 'Trâm says she missed the fun before and felt “completely left out”.', explanationVi: 'Trâm nói lần trước mình bỏ lỡ phần lớn cuộc vui và cảm thấy bị đứng ngoài khi bạn bè kể lại. “Completely left out” tương ứng với cảm giác bị tách khỏi nhóm bạn.'
+      },
+      {
+        question: "According to the father, how has Trâm’s current lifestyle affected her academic performance?",
+        options: [
+          "She engaged in a major dispute with her homeroom teacher.",
+          "Her grades are dropping, she appears exhausted, and she missed assignments.",
+          "She has stopped attending all her classes.",
+          "She made the sudden decision to abandon her English group project."
+        ],
+        answer: 1,
+        explanation: 'Her father mentions slipping grades, exhaustion, and two missed homework assignments.', explanationVi: 'Bố nêu đủ ba dấu hiệu: điểm số giảm, Trâm trông kiệt sức và bỏ lỡ hai bài tập. Đáp án B tóm tắt chính xác các chi tiết này.'
+      },
+      {
+        question: "What final compromise do the parents offer Trâm for this Saturday night?",
+        options: [
+          "She can stay until midnight provided that she updates her mother every hour.",
+          "She must stay at home while her best friend visits her instead.",
+          "She can stay until 10:30 PM, send updates, and have her father pick her up.",
+          "She can leave whenever she wants without checking in."
+        ],
+        answer: 2,
+        explanation: 'She may stay until 10:30 PM, text every hour, and be picked up by her father.', explanationVi: 'Thỏa thuận gồm ba điều kiện: ở lại đến 10:30 tối, nhắn tin cập nhật mỗi giờ và bố đến đón. Đáp án B bao gồm đủ cả ba.'
+      },
+      {
+        question: "What can be inferred about Trâm’s attitude at the very end of the interaction?",
+        options: [
+          "She remains intensely furious and adamantly rejects the solution.",
+          "She feels triumphant because her parents allowed her to stay until midnight.",
+          "She decides not to attend the birthday party.",
+          "She accepts the compromise because it is better than her usual curfew."
+        ],
+        answer: 3,
+        explanation: 'She says 10:30 PM is better than 9:00 PM and agrees to the compromise.', explanationVi: 'Trâm đồng ý và nói 10:30 tốt hơn 9:00. Có thể suy ra Trâm chấp nhận thỏa hiệp vì được ở lại lâu hơn giờ giới nghiêm bình thường; cô ấy không được phép ở đến nửa đêm.'
+      }
+    ];
+
+    const questionsEl = document.getElementById("questions");
+    const quizForm = document.getElementById("quizForm");
+    const resultEl = document.getElementById("result");
+    const scoreEl = document.getElementById("score");
+    const resultNoteEl = document.getElementById("resultNote");
+
+    function renderQuestions() {
+      questionsEl.innerHTML = "";
+      quizData.forEach((item, index) => {
+        const section = document.createElement("section");
+        section.className = "question";
+        section.id = `question-${index}`;
+        const title = document.createElement("p");
+        title.className = "q-title";
+        title.textContent = `Question ${index + 1}. ${item.question}`;
+        section.appendChild(title);
+
+        item.options.forEach((option, optionIndex) => {
+          const label = document.createElement("label");
+          label.className = "option";
+          label.dataset.option = optionIndex;
+          const radio = document.createElement("input");
+          radio.type = "radio";
+          radio.name = `q${index}`;
+          radio.value = optionIndex;
+          radio.required = index === 0;
+          const text = document.createElement("span");
+          text.textContent = `${String.fromCharCode(65 + optionIndex)}. ${option}`;
+          label.append(radio, text);
+          section.appendChild(label);
+        });
+        const feedback = document.createElement("div");
+        feedback.className = "feedback";
+        feedback.id = `feedback-${index}`;
+        feedback.hidden = true;
+        section.appendChild(feedback);
+        questionsEl.appendChild(section);
+      });
+    }
+
+    document.getElementById("audioFile").addEventListener("change", function () {
+      const file = this.files && this.files[0];
+      const player = document.getElementById("audioPlayer");
+      const status = document.getElementById("audioStatus");
+      if (!file) {
+        player.pause();
+        player.removeAttribute("src");
+        player.hidden = true;
+        status.textContent = "No audio selected yet.";
+        return;
+      }
+      if (!file.type.startsWith("audio/")) {
+        status.textContent = "Please select an audio file.";
+        this.value = "";
+        player.hidden = true;
+        return;
+      }
+      if (player.dataset.objectUrl) URL.revokeObjectURL(player.dataset.objectUrl);
+      const objectUrl = URL.createObjectURL(file);
+      player.src = objectUrl;
+      player.dataset.objectUrl = objectUrl;
+      player.hidden = false;
+      status.textContent = `Selected: ${file.name}`;
+      player.load();
+    });
+
+    quizForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      let score = 0;
+      let unanswered = 0;
+
+      quizData.forEach((item, index) => {
+        const selected = quizForm.querySelector(`input[name="q${index}"]:checked`);
+        const questionEl = document.getElementById(`question-${index}`);
+        const options = questionEl.querySelectorAll(".option");
+        const feedback = document.getElementById(`feedback-${index}`);
+        options.forEach((option) => option.classList.remove("correct", "incorrect"));
+
+        if (!selected) {
+          unanswered++;
+        } else if (Number(selected.value) === item.answer) {
+          score++;
+        }
+
+        // Color the student's selected option: green if correct, red if incorrect.
+        if (selected) {
+          if (Number(selected.value) === item.answer) {
+            options[Number(selected.value)].classList.add("correct");
+          } else {
+            options[Number(selected.value)].classList.add("incorrect");
+            // Also show the correct answer in green when the student chose incorrectly.
+            options[item.answer].classList.add("correct");
+          }
+        } else {
+          // If unanswered, show the correct option in green.
+          options[item.answer].classList.add("correct");
+        }
+
+        feedback.hidden = false;
+        if (!selected) {
+          feedback.innerHTML = `<strong>Chưa chọn đáp án.</strong><br>Đáp án đúng: ${String.fromCharCode(65 + item.answer)}. ${item.options[item.answer]}<br><strong>Giải thích (Tiếng Việt):</strong> ${item.explanationVi}<br><button type="button" class="secondary" data-show-evidence="${index}">Xem bằng chứng trong transcript</button>`;
+        } else {
+          const isCorrect = Number(selected.value) === item.answer;
+          feedback.innerHTML = `<strong>${isCorrect ? 'Chính xác!' : 'Chưa đúng.'}</strong> Đáp án bạn chọn: ${String.fromCharCode(65 + Number(selected.value))}. ${item.options[Number(selected.value)]}<br><strong>Đáp án đúng:</strong> ${String.fromCharCode(65 + item.answer)}. ${item.options[item.answer]}<br><strong>Giải thích (Tiếng Việt):</strong> ${item.explanationVi}<br><button type="button" class="secondary" data-show-evidence="${index}">Xem bằng chứng trong transcript</button>`;
+        }
+      });
+
+      document.querySelectorAll('[data-show-evidence]').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('#transcriptText mark').forEach(mark => mark.style.outline = '');
+          const evidence = document.querySelectorAll(`#transcriptText mark[data-evidence="${button.dataset.showEvidence}"]`);
+          evidence.forEach(mark => mark.style.outline = '3px solid #d49b00');
+          document.getElementById('transcriptPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+      scoreEl.textContent = `${score} / ${quizData.length}`;
+      const badgeEl = document.getElementById('badgeResult');
+      badgeEl.hidden = false;
+      if (score === quizData.length) badgeEl.textContent = '🏆 Perfect Listener — 6/6!';
+      else if (score >= 4) badgeEl.textContent = '🌟 Great Listener — keep shining!';
+      else badgeEl.textContent = '🐰 Keep Practising — you are improving!';
+      resultNoteEl.textContent = unanswered
+        ? `You left ${unanswered} question(s) unanswered. Unanswered questions receive 0 points.`
+        : score === quizData.length
+          ? "Excellent! You answered every question correctly."
+          : "Review the feedback under each question to learn from your mistakes.";
+      resultEl.style.display = "block";
+      // Reveal transcript only after submission; keep the student on the questions first.
+      document.getElementById("transcriptPanel").hidden = false;
+      document.getElementById("vocabularyPanel").hidden = false;
+      document.getElementById("questions").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function () {
+      quizForm.reset();
+      resultEl.style.display = "none";
+      document.getElementById("badgeResult").hidden = true;
+      document.getElementById("transcriptPanel").hidden = true;
+      document.getElementById("vocabularyPanel").hidden = true;
+      document.querySelectorAll('#transcriptText mark').forEach(mark => mark.style.outline = '');
+      quizData.forEach((_, index) => {
+        const questionEl = document.getElementById(`question-${index}`);
+        questionEl.querySelectorAll(".option").forEach(option => option.classList.remove("correct", "incorrect"));
+        const feedback = document.getElementById(`feedback-${index}`);
+        feedback.hidden = true;
+        feedback.textContent = "";
+      });
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+
+    // Theme, navigation, progress and vocabulary save controls
+    const progressFill = document.getElementById('progressFill');
+    function updateProgress(){
+      const answered = quizData.reduce((n,_,i)=>n+(quizForm.querySelector(`input[name="q${i}"]:checked`)?1:0),0);
+      const pct = Math.round(answered/quizData.length*100);
+      progressFill.style.width = pct + '%';
+      document.getElementById('progressLabel').textContent = `🌷 Progress: ${answered} of ${quizData.length} answered`;
+      document.getElementById('progressPercent').textContent = pct + '%';
+    }
+    quizForm.addEventListener('change', updateProgress);
+    document.getElementById('themeToggle').addEventListener('click',function(){
+      const enabled=document.body.classList.toggle('dark');
+      this.textContent=enabled?'☀️ Light mode':'🌙 Dark mode';
+      this.setAttribute('aria-pressed',String(enabled));
+    });
+    document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    document.querySelectorAll('.save-word').forEach(button=>button.addEventListener('click',function(){
+      const card=this.closest('.vocab-item'); const saved=card.classList.toggle('saved');
+      this.textContent=saved?'♥ Saved':'♡ Save'; this.setAttribute('aria-pressed',String(saved));
+    }));
+
+    renderQuestions();
+    updateProgress();
+  </script>
+</body>
+</html>
