@@ -123,16 +123,15 @@
     <header class="hero">
       <div class="eyebrow">English Listening • Grade 11</div>
       <h1>English Listening Test</h1>
-      <p class="group-credit"><strong>Prepared by:</strong> Bảo Trâm cute, Thanh Huyên, Nhật Huy &amp; Anh Đức</p>
+      <p class="group-credit"><strong>Prepared by:</strong> Bảo Trâm cute, Thanh Huyên, Nhật Huy, Anh Đức</p>
       <p>Listen to the conversation and choose the best answer for each question.</p>
-      <p><strong>Time:</strong> 15 minutes &nbsp;•&nbsp; <strong>Total:</strong> 6 questions</p>
+      <p><strong>Time:</strong> 10 minutes &nbsp;•&nbsp; <strong>Total:</strong> 6 questions</p>
     </header>
 
     <section class="panel">
-      <h2>Part I — Listening audio</h2>
-      <p class="hint">The test loads the audio file <strong>listening.mp3</strong> from this GitHub repository. Put the recording beside <strong>index.html</strong>. You can also select another audio file below for local testing.</p>
+      <h2>Listening audio</h2>
       <div class="audio-box">
-        <label for="audioFile"><strong>Select the listening file (.mp3, .wav, .m4a, etc.)</strong></label>
+        <label for="audioFile"><strong>Select the listening file </strong></label>
         <input id="audioFile" type="file" accept="audio/*" />
         <div id="audioStatus" class="status">Default audio: listening.mp3</div>
         <audio id="audioPlayer" controls preload="metadata" src="listening.mp3"></audio>
@@ -141,7 +140,7 @@
     </section>
 
     <section class="panel" id="transcriptPanel" hidden>
-      <h2>Part II — Listening transcript</h2>
+      <h2>Listening transcript</h2>
       <p class="hint">The yellow highlights show the key evidence for the correct answers. Read them after listening to check your understanding.</p>
       <div class="transcript-note"><strong>Study tip:</strong> The yellow highlights mark the evidence that supports the answers. This transcript appears only after you submit the quiz.</div>
       <div class="transcript" id="transcriptText">
@@ -193,7 +192,7 @@
     </section>
 
     <section class="panel" id="vocabularyPanel" hidden>
-      <h2>Part IV — Useful &amp; challenging vocabulary</h2>
+      <h2>Useful and challenging vocabulary</h2>
       <p class="hint">New vocabulary from the listening transcript. This section appears only after you submit your answers.</p>
       <div class="vocab-list">
         <article class="vocab-item"><button type="button" class="save-word" aria-pressed="false">♡ Save</button><span class="saved-label">♥ Saved</span><strong>curfew</strong> <span> /ˈkɜː.fjuː/ (n.)</span><p><b>Nghĩa:</b> giờ giới nghiêm; thời gian phải về nhà.</p><p><b>Example:</b> My normal curfew is 9:00 PM.</p></article>
@@ -407,8 +406,8 @@
       const badgeEl = document.getElementById('badgeResult');
       badgeEl.hidden = false;
       if (score === quizData.length) badgeEl.textContent = '🏆 Perfect Listener — 6/6!';
-      else if (score >= 4) badgeEl.textContent = '🌟 Great Listener — keep shining!';
-      else badgeEl.textContent = '🐰 Keep Practising — you are improving!';
+      else if (score >= 4) badgeEl.textContent = '🌟 Great Listener, keep shining!';
+      else badgeEl.textContent = '🐰 Keep Practising, u re improving!';
       resultNoteEl.textContent = unanswered
         ? `You left ${unanswered} question(s) unanswered. Unanswered questions receive 0 points.`
         : score === quizData.length
